@@ -135,30 +135,30 @@ int Xusb_Main (void)
 			default: data_ptr = (u8*)IMG_BUF_A; break;
 			}
 
-			r+=1;
-			g+=1;
-			b+=1;
+			// r+=1;
+			// g+=1;
+			// b+=1;
 
-			if(app_data->commit.bFormatIndex == 2)	// Y16
-			{
-				if(app_data->commit.bFrameIndex == 1)	// 1280x480
-				{
-					rgb2yuyv(data_ptr, 1280, 240, 0, g, 0, r, 0, 0);
-				}
-				else if(app_data->commit.bFrameIndex == 2)	// 1280x960
-				{
-					rgb2yuyv(data_ptr, 1280, 240, 0, b, 0, 0, g, 0);
-				}
-				else if(app_data->commit.bFrameIndex == 3)	// 640x480
-				{
-					rgb2yuyv(data_ptr, 640, 480, r, 0, 0, 0, 0, b);
-				}
-			}
+			// if(app_data->commit.bFormatIndex == 2)	// Y16
+			// {
+			// 	if(app_data->commit.bFrameIndex == 1)	// 1280x480
+			// 	{
+			// 		rgb2yuyv(data_ptr, 1280, 240, 0, g, 0, r, 0, 0);
+			// 	}
+			// 	else if(app_data->commit.bFrameIndex == 2)	// 1280x960
+			// 	{
+			// 		rgb2yuyv(data_ptr, 1280, 240, 0, b, 0, 0, g, 0);
+			// 	}
+			// 	else if(app_data->commit.bFrameIndex == 3)	// 640x480
+			// 	{
+			// 		rgb2yuyv(data_ptr, 640, 480, r, 0, 0, 0, 0, b);
+			// 	}
+			// }
 
-			if(app_data->commit.bFormatIndex == 1) // YUY2
-			{
-				rgb2yuyv(data_ptr, 640, 480, 0, g, 0, 0, 0, b);
-			}
+			// if(app_data->commit.bFormatIndex == 1) // YUY2
+			// {
+			// 	rgb2yuyv(data_ptr, 640, 480, 0, g, 0, 0, 0, b);
+			// }
 
 			data_ptr -= app_data->header_size;
 			app_data->img_received = 0;

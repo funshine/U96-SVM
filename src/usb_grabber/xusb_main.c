@@ -124,7 +124,7 @@ int Xusb_Main (void)
 		// Transfer data only after video streaming parameters are committed
 		if (app_data->state == UVC_STATE_COMMIT) {
 			// wait for new frame
-			while(app_data->img_received == 0) {}
+			// while(app_data->img_received == 0) {}
 
 			// points the head of the frame buffer
 			switch(app_data->bank) {
@@ -132,6 +132,33 @@ int Xusb_Main (void)
 			case 1:  data_ptr = (u8*)IMG_BUF_B; break;
 			case 2:  data_ptr = (u8*)IMG_BUF_C; break;
 			default: data_ptr = (u8*)IMG_BUF_A; break;
+			}
+
+			if(app_data->commit.bFormatIndex == 2)
+			{
+				if(app_data->commit.bFrameIndex == 1)
+				{
+					for(int i=0;i<1280*20;i++)
+					{
+						data_ptr[i]=128;
+					}
+				}
+				else
+				{
+					for(int i=0;i<1280*20;i++)
+					{
+						data_ptr[i]=255;
+					}
+				}
+				
+			}
+
+			if(app_data->commit.bFormatIndex == 1)
+			{
+				for(int i=0;i<1280*40;i++)
+				{
+					data_ptr[i]=0;
+				}
 			}
 
 			data_ptr -= app_data->header_size;

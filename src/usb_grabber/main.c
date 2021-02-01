@@ -573,8 +573,8 @@ void App_UsbGrabber (void) {
 	usleep(1000000);
 
 	// Check status
-	Status = Csi_CheckStatus();
-	Xil_AssertVoid(Status == XST_SUCCESS);
+	// Status = Csi_CheckStatus();
+	// Xil_AssertVoid(Status == XST_SUCCESS);
 
 	// Initialize USB driver
 	Status = Xusb_Init();

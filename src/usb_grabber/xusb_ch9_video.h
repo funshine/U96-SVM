@@ -374,6 +374,10 @@ typedef struct {
 	UVC_INPUT_HEADER_DESC input_header;
 	UVC_UNCOMPRESSED_FORMAT_DESC uncomp_format;
 	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame1;
+	UVC_UNCOMPRESSED_FORMAT_DESC uncomp_format2;
+	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame2_1;
+	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame2_2;
+	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame2_3;
 } attribute(USB20_CS_VS);
 
 typedef struct {
@@ -405,6 +409,10 @@ typedef struct {
 	UVC_INPUT_HEADER_DESC input_header;
 	UVC_UNCOMPRESSED_FORMAT_DESC uncomp_format;
 	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame1;
+	UVC_UNCOMPRESSED_FORMAT_DESC uncomp_format2;
+	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame2_1;
+	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame2_2;
+	UVC_UNCOMPRESSED_FRAME_DESC uncomp_frame2_3;
 } attribute(USB30_CS_VS);
 
 // Configuration Descriptor Chain for USB 3.0
@@ -666,13 +674,13 @@ struct UVC_APP_DATA {
 	int state;
 
 	// TX Buffer and Control
-	int busy;
+	volatile int busy;
 	int max_buf_size;
 	int header_size;
 	int max_payload_size;
 	UVC_PAYLOAD_HEADER header;
-	int bank;
-	int img_received;
+	volatile int bank;
+	volatile int img_received;
 };
 
 enum UVC_STATE	{UVC_STATE_IDLE, UVC_STATE_COMMIT};

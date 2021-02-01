@@ -176,7 +176,7 @@ USB_CONFIG __attribute__ ((aligned(16))) config2 = {
 		sizeof(UVC_INPUT_HEADER_DESC),		// bLength
 		UVC_CS_INTERFACE,					// bDescriptorType
 		UVC_VS_INPUT_HEADER,				// bDescriptorSubType
-		0x01,								// bNumFormats
+		0x02,								// bNumFormats
 		sizeof(USB20_CS_VS),				// wTotalLength
 		0x83,								// bEndpointAddress
 		0x00,								// bmInfo
@@ -220,6 +220,72 @@ USB_CONFIG __attribute__ ((aligned(16))) config2 = {
 		333333,								// dwDefaultFrameInterval
 		0x01,								// bFrameIntervalType
 		333333								// dwFrameInterval
+	},
+	{	// Payload-Specific Format (#2, Uncompressed)
+		sizeof(UVC_UNCOMPRESSED_FORMAT_DESC),
+											// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FORMAT_UNCOMPRESSED,			// bDescriptorSubType
+		0x02,								// bFormatIndex
+		0x03,								// bNumFrameDescriptors
+		0x20363159,							// guidFormat_LL, 0x32595559='YUY2', 0x2036315A='Z16 '
+		0x00100000,							// guidFormat_LH
+		0xaa000080,							// guidFormat_HL
+		0x719b3800,							// guidFormat_HH
+		0x10,								// bBitsPerPixel
+		0x01,								// bDefaultFrameIndex
+		0x00,								// bAspectRatioX
+		0x00,								// bAspectRatioY
+		0x00,								// bmInterlaceFlags
+		0x00								// bCopyProtect
+	},
+	{	// Payload-Specific Frame (#1, 1280x480 30fps)
+		sizeof(UVC_UNCOMPRESSED_FRAME_DESC),
+											// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FRAME_UNCOMPRESSED,			// bDescriptorSubType
+		0x01,								// bFrameIndex
+		0x00,								// bmCapabilities
+		1280,								// wWidth
+		480,								// wHeight
+		0x11940000,							// dwMinBitRate
+		0x11940000,							// dwMaxBitRate
+		1228800,							// dwMaxVideoFrameBufferSize
+		333333,								// dwDefaultFrameInterval
+		0x01,								// bFrameIntervalType
+		333333								// dwFrameInterval
+	},
+	{	// Payload-Specific Frame (#2, 1280x960 30fps)
+		sizeof(UVC_UNCOMPRESSED_FRAME_DESC),
+											// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FRAME_UNCOMPRESSED,			// bDescriptorSubType
+		0x02,								// bFrameIndex
+		0x00,								// bmCapabilities
+		1280,								// wWidth
+		960,								// wHeight
+		0x11940000*2,							// dwMinBitRate
+		0x11940000*2,							// dwMaxBitRate
+		1228800*2,							// dwMaxVideoFrameBufferSize
+		333333,								// dwDefaultFrameInterval
+		0x01,								// bFrameIntervalType
+		333333								// dwFrameInterval
+	},
+	{	// Payload-Specific Frame (#3, 640x480 120fps)
+		sizeof(UVC_UNCOMPRESSED_FRAME_DESC),
+											// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FRAME_UNCOMPRESSED,			// bDescriptorSubType
+		0x03,								// bFrameIndex
+		0x00,								// bmCapabilities
+		640,								// wWidth
+		480,								// wHeight
+		0x11940000*2,							// dwMinBitRate
+		0x11940000*2,							// dwMaxBitRate
+		1228800/2,							// dwMaxVideoFrameBufferSize
+		83333,								// dwDefaultFrameInterval
+		0x01,								// bFrameIntervalType
+		83333								// dwFrameInterval
 	},}, // end of CS VS descriptors
 	{	// Standard VS Isochronous Video Data Endpoint Descriptor
 		sizeof(USB_STD_EP_DESC),			// bLength
@@ -354,7 +420,7 @@ USB30_CONFIG __attribute__ ((aligned(16))) config3 = {
 		sizeof(UVC_INPUT_HEADER_DESC),		// bLength
 		UVC_CS_INTERFACE,					// bDescriptorType
 		UVC_VS_INPUT_HEADER,				// bDescriptorSubType
-		0x01,								// bNumFormats
+		0x02,								// bNumFormats
 		sizeof(USB30_CS_VS),				// wTotalLength
 		0x83,								// bEndpointAddress
 		0x00,								// bmInfo
@@ -397,6 +463,70 @@ USB30_CONFIG __attribute__ ((aligned(16))) config3 = {
 		333333,								// dwDefaultFrameInterval
 		0x01,								// bFrameIntervalType
 		333333								// dwFrameInterval
+	},
+	{	// Payload-Specific Format (#2, Uncompressed)
+		sizeof(UVC_UNCOMPRESSED_FORMAT_DESC),
+											// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FORMAT_UNCOMPRESSED,			// bDescriptorSubType
+		0x02,								// bFormatIndex
+		0x03,								// bNumFrameDescriptors
+		0x20363159,							// guidFormat_LL, 0x32595559='YUY2', 0x2036315A='Z16 '
+		0x00100000,							// guidFormat_LH
+		0xaa000080,							// guidFormat_HL
+		0x719b3800,							// guidFormat_HH
+		0x10,								// bBitsPerPixel
+		0x01,								// bDefaultFrameIndex
+		0x00,								// bAspectRatioX
+		0x00,								// bAspectRatioY
+		0x00,								// bmInterlaceFlags
+		0x00								// bCopyProtect
+	},
+	{	// Payload-Specific Frame (#1, 1280x480 30fps)
+		sizeof(UVC_UNCOMPRESSED_FRAME_DESC),// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FRAME_UNCOMPRESSED,			// bDescriptorSubType
+		0x01,								// bFrameIndex
+		0x00,								// bmCapabilities
+		1280,								// wWidth
+		480,								// wHeight
+		294912000,							// dwMinBitRate
+		294912000,							// dwMaxBitRate
+		1228800,							// dwMaxVideoFrameBufferSize
+		333333,								// dwDefaultFrameInterval
+		0x01,								// bFrameIntervalType
+		333333								// dwFrameInterval
+	},
+	{	// Payload-Specific Frame (#2, 1280x960 30fps)
+		sizeof(UVC_UNCOMPRESSED_FRAME_DESC),// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FRAME_UNCOMPRESSED,			// bDescriptorSubType
+		0x02,								// bFrameIndex
+		0x00,								// bmCapabilities
+		1280,								// wWidth
+		960,								// wHeight
+		294912000*2,							// dwMinBitRate
+		294912000*2,							// dwMaxBitRate
+		1228800*2,							// dwMaxVideoFrameBufferSize
+		333333,								// dwDefaultFrameInterval
+		0x01,								// bFrameIntervalType
+		333333								// dwFrameInterval
+	},
+	{	// Payload-Specific Frame (#3, 640x480 120fps)
+		sizeof(UVC_UNCOMPRESSED_FRAME_DESC),
+											// bLength
+		UVC_CS_INTERFACE,					// bDescriptorType
+		UVC_VS_FRAME_UNCOMPRESSED,			// bDescriptorSubType
+		0x03,								// bFrameIndex
+		0x00,								// bmCapabilities
+		640,								// wWidth
+		480,								// wHeight
+		0x11940000*2,							// dwMinBitRate
+		0x11940000*2,							// dwMaxBitRate
+		1228800/2,							// dwMaxVideoFrameBufferSize
+		83333,								// dwDefaultFrameInterval
+		0x01,								// bFrameIntervalType
+		83333								// dwFrameInterval
 	},}, // end of CS VS descriptors
 	{	// Standard VS Isochronous Video Data Endpoint Descriptor
 		sizeof(USB_STD_EP_DESC),			// bLength
@@ -1429,6 +1559,10 @@ s32 Uvc_InitState (struct Usb_DevData *InstancePtr, u8* config) {
 	// set default values to allowable min/max (no negotiation)
 	memcpy(&app_data->min, &app_data->probe, sizeof(UVC_VIDEO_PROBE_AND_COMMIT_CONTROLS_DESC));
 	memcpy(&app_data->max, &app_data->probe, sizeof(UVC_VIDEO_PROBE_AND_COMMIT_CONTROLS_DESC));
+	app_data->max.bFrameIndex = 3;
+	app_data->max.bFormatIndex = 2;
+	app_data->max.dwMaxVideoFrameSize = app_data->probe.dwMaxVideoFrameSize * 2;
+	app_data->min.dwFrameInterval = 83333;
 
 	return XST_SUCCESS;
 }

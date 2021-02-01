@@ -1517,8 +1517,8 @@ s32 Uvc_InitState (struct Usb_DevData *InstancePtr, u8* config) {
 	//------------------------------------------------------------------
 	// set initial negotiation values based on the values of default
 	// frame descriptor
-	u8 default_format_id = 1;
-	u8 default_frame_id = 1;
+	u8 default_format_id = 2;
+	u8 default_frame_id = 3;
 
 	// retrieve a frame descriptor with given format/frame ID
 	UVC_UNCOMPRESSED_FRAME_DESC* frame_desc = Uvc_GetFrameDesc (
@@ -1550,7 +1550,7 @@ s32 Uvc_InitState (struct Usb_DevData *InstancePtr, u8* config) {
 		app_data->probe.dwMaxPayloadTransferSize = 3068;
 	} else {
 		// USB 3.0
-		app_data->probe.dwMaxPayloadTransferSize = 16396;
+		app_data->probe.dwMaxPayloadTransferSize = 32768; // better fps than 16396
 	}
 
 	//------------------------------------------------------------------
@@ -1559,10 +1559,16 @@ s32 Uvc_InitState (struct Usb_DevData *InstancePtr, u8* config) {
 	// set default values to allowable min/max (no negotiation)
 	memcpy(&app_data->min, &app_data->probe, sizeof(UVC_VIDEO_PROBE_AND_COMMIT_CONTROLS_DESC));
 	memcpy(&app_data->max, &app_data->probe, sizeof(UVC_VIDEO_PROBE_AND_COMMIT_CONTROLS_DESC));
-	app_data->max.bFrameIndex = 3;
-	app_data->max.bFormatIndex = 2;
-	app_data->max.dwMaxVideoFrameSize = app_data->probe.dwMaxVideoFrameSize * 2;
+
+	app_data->min.bFormatIndex = 1;
+	app_data->min.bFrameIndex = 1;
+	app_data->min.dwMaxVideoFrameSize = 640 * 480 * 2;
 	app_data->min.dwFrameInterval = 83333;
+
+	app_data->max.bFormatIndex = 2;
+	app_data->max.bFrameIndex = 3;
+	app_data->max.dwMaxVideoFrameSize = 1280 * 960 * 2;
+	app_data->max.dwFrameInterval = 333333;
 
 	return XST_SUCCESS;
 }

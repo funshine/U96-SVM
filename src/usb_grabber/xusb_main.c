@@ -95,6 +95,7 @@ int Xusb_Main (void)
 	int remain;
 	int payload_size, buf_size;
 	u8 *data_ptr;
+	volatile u8 r=255, g=0, b=0;
 
 	// application specific data structure
 	struct UVC_APP_DATA *app_data = Uvc_GetAppData(&UsbInstance);
@@ -124,7 +125,7 @@ int Xusb_Main (void)
 		// Transfer data only after video streaming parameters are committed
 		if (app_data->state == UVC_STATE_COMMIT) {
 			// wait for new frame
-			// while(app_data->img_received == 0) {}
+			while(app_data->img_received == 0) {}
 
 			// points the head of the frame buffer
 			switch(app_data->bank) {
@@ -134,31 +135,29 @@ int Xusb_Main (void)
 			default: data_ptr = (u8*)IMG_BUF_A; break;
 			}
 
-			if(app_data->commit.bFormatIndex == 2)
+			r+=1;
+			g+=1;
+			b+=1;
+
+			if(app_data->commit.bFormatIndex == 2)	// Y16
 			{
-				if(app_data->commit.bFrameIndex == 1)
+				if(app_data->commit.bFrameIndex == 1)	// 1280x480
 				{
-					for(int i=0;i<1280*20;i++)
-					{
-						data_ptr[i]=128;
-					}
+					rgb2yuyv(data_ptr, 1280, 240, 0, g, 0, r, 0, 0);
 				}
-				else
+				else if(app_data->commit.bFrameIndex == 2)	// 1280x960
 				{
-					for(int i=0;i<1280*20;i++)
-					{
-						data_ptr[i]=255;
-					}
+					rgb2yuyv(data_ptr, 1280, 240, 0, b, 0, 0, g, 0);
 				}
-				
+				else if(app_data->commit.bFrameIndex == 3)	// 640x480
+				{
+					rgb2yuyv(data_ptr, 640, 480, r, 0, 0, 0, 0, b);
+				}
 			}
 
-			if(app_data->commit.bFormatIndex == 1)
+			if(app_data->commit.bFormatIndex == 1) // YUY2
 			{
-				for(int i=0;i<1280*40;i++)
-				{
-					data_ptr[i]=0;
-				}
+				rgb2yuyv(data_ptr, 640, 480, 0, g, 0, 0, 0, b);
 			}
 
 			data_ptr -= app_data->header_size;

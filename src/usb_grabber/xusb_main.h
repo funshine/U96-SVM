@@ -29,6 +29,7 @@
 
 #include "xusb_ch9_video.h"
 #include "uart.h"
+#include "color.h"
 #include "main.h"
 
 
